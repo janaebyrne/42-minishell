@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shkaruna <shkaruna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:41:21 by grmullin          #+#    #+#             */
-/*   Updated: 2024/12/16 01:07:58 by shkaruna         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:15:56 by jbyrne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void setup_redirection(t_cmd *node);
 int open_file(const char *file, int flags, mode_t mode);
 void redirect_fd(int oldfd, int newfd);
 int handle_heredoc(char *delimiter, t_env *env_list);
-
+char *expand_env(char *str, t_env *env_list);
 
 
 /*          Envp                */
@@ -150,7 +150,7 @@ int     ft_pwd(t_cmd *cmd_list);
 int ft_export(t_cmd *cmd_list, t_env **env_list);
 int ft_unset(t_cmd *cmd_list, t_env **env_list);
 int ft_env(t_cmd *cmd_list, t_env *env_list);
-int ft_exit(t_cmd *cmd); 
+int ft_exit(t_cmd *cmd);
 
 
 char    *get_pwd(char **envp);

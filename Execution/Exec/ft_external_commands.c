@@ -29,7 +29,7 @@ static char	*create_env_entry(t_env *env)
 	return (entry);
 }
 
-static char		**env_list_to_array(t_env *env_list)
+static char	**env_list_to_array(t_env *env_list)
 {
 	int		count;
 	t_env	*current;
@@ -47,7 +47,7 @@ static char		**env_list_to_array(t_env *env_list)
 		envp[i] = create_env_entry(current);
 		if (!envp[i])
 		{
-			//free_envp(envp, i);
+			// free_envp(envp, i);
 			return (NULL);
 		}
 		current = current->next;
