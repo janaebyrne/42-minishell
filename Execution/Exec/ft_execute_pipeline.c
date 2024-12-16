@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_pipeline.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shkaruna <shkaruna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:12:33 by shkaruna          #+#    #+#             */
-/*   Updated: 2024/12/16 00:56:33 by shkaruna         ###   ########.fr       */
+/*   Updated: 2024/12/16 20:43:30 by jbyrne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static int	ft_setup_pipe(int pipe_fd[2])
 static void	ft_child_process(t_cmd *cmd, int prev_fd, int pipe_fd[2],
 		t_shell *shell)
 {
-	if (prev_fd != -1 && (dup2(prev_fd, STDIN_FILENO) == -1 || close(prev_fd) ==
-			-1))
+	if (prev_fd != -1 && (dup2(prev_fd, STDIN_FILENO) == -1
+		|| close(prev_fd) == -1))
 	{
 		perror("dup2 input from pipe");
 		exit(EXIT_FAILURE);

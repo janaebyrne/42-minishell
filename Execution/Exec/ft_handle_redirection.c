@@ -6,7 +6,7 @@
 /*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 21:31:55 by janaebyrne        #+#    #+#             */
-/*   Updated: 2024/12/16 18:15:27 by jbyrne           ###   ########.fr       */
+/*   Updated: 2024/12/16 20:42:35 by jbyrne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	open_file(const char *file, int flags, mode_t mode)
 	}
 	return (fd);
 }
+
 void	redirect_fd(int oldfd, int newfd)
 {
 	int	result;
@@ -49,19 +50,16 @@ void	setup_redirection(t_cmd *node)
 	}
 	else if (node->input_file)
 	{
-		// Redirect input from file (`<`)
 		fd = open_file(node->input_file, O_RDONLY, 0);
 		redirect_fd(fd, STDIN_FILENO);
 	}
 	else if (node->output_file && node->append == 0)
 	{
-		// Redirect output to file, overwriting (`>`)
 		fd = open_file(node->output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		redirect_fd(fd, STDOUT_FILENO);
 	}
 	else if (node->append == 1)
 	{
-		// Redirect output to file, appending (`>>`)
 		fd = open_file(node->output_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		redirect_fd(fd, STDOUT_FILENO);
 	}

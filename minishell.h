@@ -6,7 +6,7 @@
 /*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:41:21 by grmullin          #+#    #+#             */
-/*   Updated: 2024/12/16 18:23:21 by jbyrne           ###   ########.fr       */
+/*   Updated: 2024/12/16 21:04:27 by jbyrne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ int parser_heredoc(t_cmd *l_cmd);
 void parse_redirections(t_token *token_list, t_cmd *cmd);
 void free_command_list(t_cmd *cmd_list);
 void	parse_double_quotes(const char *s, char *new_value, int *i, int *j, t_env *env_list);
+int	count_words_without_redirections(char *str, char delimiter);
+char	**ft_split_without_redirections(char *str, char delimiter);
+int	count_words_without_redirections(char *str, char delimiter);
+char	**ft_split_without_redirections(char *str, char delimiter);
+char	*get_next_word(char **str);
+
 
 
 t_cmd *create_cmd_node(void);
@@ -85,6 +91,11 @@ void	update_env_var(t_env **env_list, const char *key, const char *value);
 // 		const char *value);
 // int	is_valid_identifier(const char *str);
 // void	set_value(char **dest, const char *src);
+void	alpha_sort_env_list(t_env **head);
+void	print_sorted_env_list(t_env *env_list);
+void	free_env_list(t_env *env_list);
+t_env	*copy_env_list(t_env *env_list);
+void	add_or_update_env(t_env **env_list, const char *key, const char *value);
 
 /*			ft_split			*/
 char		**ft_split(const char *s, char c);
@@ -127,6 +138,10 @@ int ft_execute(t_cmd *cmd_list, t_shell *shell);
 //int setup_pipes_and_fork(t_cmd *cmd_list, int *pids, t_env *env_list);
 int ft_execute_pipeline(t_cmd *cmd, t_shell *shell);
 //void ft_execute_redirections(t_cmd *cmd, t_env *env_list);
+int	count_env_list(t_env *env_list);
+char	*create_env_entry(t_env *env);
+char	**env_list_to_array(t_env *env_list);
+char	*strip_newline(char *str);
 
 void setup_redirection(t_cmd *node);
 int open_file(const char *file, int flags, mode_t mode);

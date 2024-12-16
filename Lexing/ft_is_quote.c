@@ -6,7 +6,7 @@
 /*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:31:24 by grmullin          #+#    #+#             */
-/*   Updated: 2024/12/16 18:52:34 by jbyrne           ###   ########.fr       */
+/*   Updated: 2024/12/16 21:07:56 by jbyrne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_is_single_quote(t_token **head, t_token **tmp, char *line, int *i)
 
 void	ft_is_double_quote(t_token **head, t_token **tmp, char *line, int *i)
 {
-	char *value;
+	char	*value;
 
 	if (line[*i] == '\"')
 	{

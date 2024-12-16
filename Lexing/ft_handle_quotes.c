@@ -6,7 +6,7 @@
 /*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:50:33 by shkaruna          #+#    #+#             */
-/*   Updated: 2024/12/16 18:18:39 by jbyrne           ###   ########.fr       */
+/*   Updated: 2024/12/16 21:07:32 by jbyrne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static void	parse_single_quotes(const char *s, char *new_value, int *i, int *j)
 		(*i)++;
 	}
 }
-
 
 int	parse_quotes_in_tokens(t_token *token_list, t_env *env_list)
 {

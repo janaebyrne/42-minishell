@@ -6,7 +6,7 @@
 /*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:38:22 by shkaruna          #+#    #+#             */
-/*   Updated: 2024/12/16 18:53:12 by jbyrne           ###   ########.fr       */
+/*   Updated: 2024/12/16 21:08:37 by jbyrne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	ft_lexing(char *line, t_token **head, t_env *env_list, t_shell *shell)
 	i = 0;
 	tmp = NULL;
 	*head = NULL;
-	// printf("Lexing input: %s\n", line);
 	while (line[i])
 	{
 		ft_is_pipe(head, &tmp, line, &i);
