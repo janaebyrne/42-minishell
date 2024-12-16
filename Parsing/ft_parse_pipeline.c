@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_pipeline.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shkaruna <shkaruna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:35:27 by shkaruna          #+#    #+#             */
-/*   Updated: 2024/12/12 17:53:42 by shkaruna         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:43:31 by jbyrne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,46 +179,6 @@ static int count_words_without_redirections(char *str, char delimiter)
 }
 
 
-
-// static int check_pipe_syntax(char *line)
-// {
-//     int i = 0;
-//     int last_was_pipe = 1; // Track if the last significant character was a pipe
-
-//     while (line[i])
-//     {
-//         // Skip spaces
-//         while (line[i] == ' ')
-//             i++;
-
-//         // Check for invalid pipe syntax
-//         if (line[i] == '|')
-//         {
-//             if (last_was_pipe)
-//             {
-//                 write(STDERR_FILENO, "minishell: syntax error near unexpected token '|'\n", 51);
-//                 return 1;
-//             }
-//             last_was_pipe = 1; // Mark that a pipe was found
-//         }
-//         else if (line[i] != '\0')
-//         {
-//             last_was_pipe = 0; // Reset if a valid character is found
-//         }
-
-//         i++;
-//     }
-
-//     // Check if the last character is a pipe
-//     if (last_was_pipe)
-//     {
-//         write(STDERR_FILENO, "minishell: syntax error near unexpected token '|'\n", 51);
-//         return 1;
-//     }
-
-//     return 0;
-// }
-
 void parse_redirections(t_token *token_list, t_cmd *cmd)
 {
     t_token *current = token_list;
@@ -274,69 +234,31 @@ void parse_redirections(t_token *token_list, t_cmd *cmd)
                 return;
             }
         }
+		if (current->type == PIPE && current->next && current->next->type == PIPE)
+        {
+            fprintf(stderr, "Syntax error: Unexpected token '||'\n");
+            return;
+        }
         // Move to the next token
         current = current->next;
     }
 }
 
 
-// static void parse_redirections(char *part, t_cmd *cmd)
-// {
-//     int i = 0;
-//     char *file = NULL;
-
-//     while (part[i])
-//     {
-//         printf("PART: %c", part[i]);//debug
-//         // Check for input redirection (`<`)
-//         if (part[i] == '<')
-//         {
-//             int is_heredoc = (part[i + 1] == '<');
-//             i += is_heredoc ? 2 : 1;
-//             while (part[i] == ' ') i++; // Skip spaces
-//             file = get_next_word(&part); // Extract filename or delimiter
-
-//             if (!file)
-//                 return; // Handle syntax errors for missing files
-
-//             if (is_heredoc)
-//                 cmd->heredoc_delimiter = file; // Store heredoc delimiter
-//             else
-//                 cmd->input_file = file; // Store input file
-//         }
-//         // Check for output redirection (`>` or `>>`)
-//         else if (part[i] == '>')
-//         {
-//             int is_append = (part[i + 1] == '>');
-//             i += is_append ? 2 : 1;
-//             printf("you are here in parse redirection 2\n");//debug
-//             while (part[i] == ' ') i++; // Skip spaces
-//             file = get_next_word(&part); // Extract filename
-//             printf("file: %s\n", file);//debug
-//             if (!file)
-//                 return; // Handle syntax errors for missing files
-
-//             cmd->output_file = file; // Store output file
-//             cmd->append = is_append; // Set append flag
-//         }
-//         else
-//             i++; // Continue parsing
-//     }
-// }
 
 t_cmd *parse_pipeline(t_token *token_list)
 {
     t_cmd *head = NULL;
     t_cmd *current = NULL;
-    t_token *tokens = token_list;  // We work with the tokens directly
-    
+    t_token *tokens = token_list;
+
     while (tokens)
     {
         t_cmd *new_cmd = malloc(sizeof(t_cmd));
         if (!new_cmd)
         {
             perror("malloc");
-            free_command_list(head); // Clean up previously allocated commands
+            free_command_list(head);
             return NULL;
         }
 
@@ -351,7 +273,6 @@ t_cmd *parse_pipeline(t_token *token_list)
 
         // Parse redirections in the current command part
         parse_redirections(tokens, new_cmd);
-
         // Now split the arguments (everything that's not redirection)
         char **args = ft_split_without_redirections(tokens->value, ' ');
         if (!args)
@@ -376,10 +297,16 @@ t_cmd *parse_pipeline(t_token *token_list)
         while (tokens && tokens->type != PIPE)
             tokens = tokens->next;
 
-        if (tokens) // Skip the pipe symbol
-            tokens = tokens->next;
-    }
-
-    return head;
+        if (tokens)
+		{
+			tokens = tokens->next; // Skip the single PIPE
+			if (tokens && tokens->type == PIPE) // Check for double PIPE
+			{
+				tokens = tokens->next; // Advance past the second PIPE
+				return(head); // break if double pipe found
+			}
+		}
+}
+    return (head);
 }
 
