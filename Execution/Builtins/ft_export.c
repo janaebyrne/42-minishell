@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shkaruna <shkaruna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:40:01 by shkaruna          #+#    #+#             */
-/*   Updated: 2024/12/15 23:20:37 by shkaruna         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:54:58 by jbyrne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static void add_or_update_env(t_env **env_list, const char *key, const char *val
             current->value = value ? ft_strdup(value) : NULL;
             return;
         }
+		if (!current->next)
+			break;
         current = current->next;
     }
     t_env *new_node = malloc(sizeof(t_env));
@@ -46,8 +48,12 @@ static void add_or_update_env(t_env **env_list, const char *key, const char *val
         return;
     new_node->key = ft_strdup(key);
     new_node->value = value ? ft_strdup(value) : NULL;
-    new_node->next = *env_list;
-    *env_list = new_node;
+    new_node->next =  NULL;
+
+	if (!*env_list)
+		*env_list = new_node;
+	else
+		current->next = new_node;
 }
 
 static void handle_argument(t_env **env_list, const char *arg)
@@ -170,7 +176,6 @@ int ft_export(t_cmd *cmd_list, t_env **env_list)
 {
     if (!cmd_list->args[1])
     {
-        alpha_sort_env_list(env_list);
         print_sorted_env_list(*env_list);
         return (0);
     }
@@ -180,7 +185,5 @@ int ft_export(t_cmd *cmd_list, t_env **env_list)
         handle_argument(env_list, cmd_list->args[i]);
         i++;
     }
-
-    alpha_sort_env_list(env_list);
     return (0);
 }
