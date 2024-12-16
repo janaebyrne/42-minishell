@@ -6,7 +6,7 @@
 /*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:41:21 by grmullin          #+#    #+#             */
-/*   Updated: 2024/12/16 18:13:01 by jbyrne           ###   ########.fr       */
+/*   Updated: 2024/12/16 18:23:21 by jbyrne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int parser_cmd_pipeline_merge(t_cmd **l_cmd);
 int parser_heredoc(t_cmd *l_cmd);
 void parse_redirections(t_token *token_list, t_cmd *cmd);
 void free_command_list(t_cmd *cmd_list);
+void	parse_double_quotes(const char *s, char *new_value, int *i, int *j, t_env *env_list);
+
 
 t_cmd *create_cmd_node(void);
 t_cmd *parse_tokens(t_token *token_list);
