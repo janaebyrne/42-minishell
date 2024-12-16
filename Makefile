@@ -6,7 +6,7 @@
 #    By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/20 11:39:47 by shkaruna          #+#    #+#              #
-#    Updated: 2024/12/16 17:16:24 by jbyrne           ###   ########.fr        #
+#    Updated: 2024/12/16 18:12:08 by jbyrne           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ Utils/utils.c Utils/utils1.c Execution/Exec/Exec.c Execution/Exec/ft_external_co
 Utils/ft_split.c Execution/Builtins/ft_exit.c Execution/Exec/ft_execute_pipeline.c \
 Execution/Exec/Signals/ft_signals.c Parsing/ft_parse_pipeline.c \
 Parsing/ft_parsing.c Execution/Exec/ft_handle_redirection.c Utils/get_next_line.c \
-Execution/Builtins/builtins_utils.c Execution/Exec/ft_expand_env.c \
+Execution/Builtins/builtins_utils.c Execution/Exec/ft_expand_env.c Execution/Exec/ft_handle_heredoc.c \
 
 OBJS = $(SRCS:.c=.o)
 
