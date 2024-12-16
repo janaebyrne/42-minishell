@@ -6,7 +6,7 @@
 /*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:35:27 by shkaruna          #+#    #+#             */
-/*   Updated: 2024/12/16 15:43:31 by jbyrne           ###   ########.fr       */
+/*   Updated: 2024/12/16 16:56:25 by jbyrne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,19 +182,19 @@ static int count_words_without_redirections(char *str, char delimiter)
 void parse_redirections(t_token *token_list, t_cmd *cmd)
 {
     t_token *current = token_list;
+	if (!current)
+	{
+		printf("error: no token list");
+	}
     while (current)
     {
-        // If we find a redirection output token (>)
         if (current->type == REDIR_OUT || current->type == REDIR_OUT_APPEND)
         {
             if (current->type == REDIR_OUT_APPEND)
                 cmd->append = 1;
-            current = current->next;  // Move to the next token, which should be the filename
+            current = current->next;
             if (current && current->type == WORD)
-            {
-                // The next token should be a filename for output redirection
                 cmd->output_file = current->value;
-            }
             else
             {
                 // Handle error: Missing file for redirection
@@ -225,7 +225,7 @@ void parse_redirections(t_token *token_list, t_cmd *cmd)
             {
                 // The next token should be a delimiter for heredoc redirection
                 cmd->heredoc_delimiter = current->value;
-                printf("Heredoc redirection with delimiter: %s\n", cmd->heredoc_delimiter);
+                //printf("Heredoc redirection with delimiter: %s\n", cmd->heredoc_delimiter);
             }
             else
             {
@@ -309,4 +309,3 @@ t_cmd *parse_pipeline(t_token *token_list)
 }
     return (head);
 }
-

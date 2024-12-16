@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_handle_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shkaruna <shkaruna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:50:33 by shkaruna          #+#    #+#             */
-/*   Updated: 2024/12/12 15:35:55 by shkaruna         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:07:10 by jbyrne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,12 @@ int parse_quotes_in_tokens(t_token *token_list, t_env *env_list)
     current = token_list;
     while (current)
     {
+		if (!current->value)
+        {
+            fprintf(stderr, "Token value is NULL at parse_quotes_in_tokens\n");
+            current = current->next;
+            continue; // Skip processing uninitialized tokens
+        }
         if (current->type == WORD)
         {
             s = current->value;
