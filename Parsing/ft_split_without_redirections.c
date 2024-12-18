@@ -6,7 +6,7 @@
 /*   By: janaebyrne <janaebyrne@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:06:12 by jbyrne            #+#    #+#             */
-/*   Updated: 2024/12/18 11:03:43 by janaebyrne       ###   ########.fr       */
+/*   Updated: 2024/12/18 11:05:05 by janaebyrne       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ static char *skip_redirection(char *str)
 char	**ft_split_without_redirections(char *str, char delimiter)
 {
 	char	**result;
-	int		i = 0;
-
+	int		i;
+	
+	i= 0;
 	result = malloc(sizeof(char *) * (count_words_without_redirections(str, delimiter) + 1));
 	if (!result)
 		return (NULL);
-
 	while (*str)
 	{
 		if (*str == ' ' || *str == delimiter)
