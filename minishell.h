@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: janaebyrne <janaebyrne@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:41:21 by grmullin          #+#    #+#             */
-/*   Updated: 2024/12/16 21:04:27 by jbyrne           ###   ########.fr       */
+/*   Updated: 2024/12/18 07:19:36 by janaebyrne       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_token     *find_prev_op(t_token *token_list);
 void        print_tokens(t_token *head);
 
 int parse_quotes_in_tokens(t_token *token_list, t_env *env_list);
+void	process_token(t_token **head, t_token **tmp, char *line, int *i);
 
 /*          parsing         */
 t_cmd *parse_pipeline(t_token *token_list);
@@ -64,6 +65,7 @@ int parser_cmd_pipeline_merge(t_cmd **l_cmd);
 int parser_heredoc(t_cmd *l_cmd);
 void parse_redirections(t_token *token_list, t_cmd *cmd);
 void free_command_list(t_cmd *cmd_list);
+void free_token_list(t_token *token_list);
 void	parse_double_quotes(const char *s, char *new_value, int *i, int *j, t_env *env_list);
 int	count_words_without_redirections(char *str, char delimiter);
 char	**ft_split_without_redirections(char *str, char delimiter);
@@ -177,6 +179,10 @@ void    ft_swap(char **a, char **b);
 /*          invalid input           */
 void    command_not_found(t_node *node);
 
+/*          main                    */
+void	process_line(char *line, t_shell *shell);
+void	init_shell(t_shell *shell, char **envp);
+t_cmd	*prepare_commands(char *line, t_token **token_list, t_shell *shell);
 // /*          get_next_line           */
 // char	*get_next_line(int fd);
 // char	*clean_file(char *leftover);

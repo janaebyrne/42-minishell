@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: janaebyrne <janaebyrne@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:38:22 by shkaruna          #+#    #+#             */
-/*   Updated: 2024/12/16 21:08:37 by jbyrne           ###   ########.fr       */
+/*   Updated: 2024/12/18 06:42:50 by janaebyrne       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ const char	*get_token_type(t_token_type type)
 	return (g_token_type[type]);
 }
 
+void	process_token(t_token **head, t_token **tmp, char *line, int *i)
+{
+	ft_is_pipe(head, tmp, line, i);
+	ft_is_redir_out(head, tmp, line, i);
+	ft_is_redir_in(head, tmp, line, i);
+	ft_is_single_quote(head, tmp, line, i);
+	ft_is_double_quote(head, tmp, line, i);
+	ft_is_whitespace(head, tmp, line, i);
+	ft_is_word(head, tmp, line, i);
+}
+
 void	ft_lexing(char *line, t_token **head, t_env *env_list, t_shell *shell)
 {
 	t_token	*tmp;
@@ -51,17 +62,10 @@ void	ft_lexing(char *line, t_token **head, t_env *env_list, t_shell *shell)
 	tmp = NULL;
 	*head = NULL;
 	while (line[i])
-	{
-		ft_is_pipe(head, &tmp, line, &i);
-		ft_is_redir_out(head, &tmp, line, &i);
-		ft_is_redir_in(head, &tmp, line, &i);
-		ft_is_single_quote(head, &tmp, line, &i);
-		ft_is_double_quote(head, &tmp, line, &i);
-		ft_is_whitespace(head, &tmp, line, &i);
-		ft_is_word(head, &tmp, line, &i);
-	}
+		process_token(head, &tmp, line, &i);
 	parse_quotes_in_tokens(*head, env_list);
 }
+
 
 void	print_tokens(t_token *token_list)
 {

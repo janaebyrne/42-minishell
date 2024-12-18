@@ -6,7 +6,7 @@
 /*   By: janaebyrne <janaebyrne@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:08:20 by jbyrne            #+#    #+#             */
-/*   Updated: 2024/12/06 00:52:11 by janaebyrne       ###   ########.fr       */
+/*   Updated: 2024/12/18 07:12:18 by janaebyrne       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*get_next_line(int fd);
 char	*read_from_file(int fd, char *leftover);
 char	*extract_line(char *leftover);
 char	*clean_file(char *leftover);
-
 
 
 #endif

@@ -3,41 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: janaebyrne <janaebyrne@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 17:10:15 by shkaruna          #+#    #+#             */
-/*   Updated: 2024/12/16 16:50:21 by jbyrne           ###   ########.fr       */
+/*   Updated: 2024/12/18 07:21:24 by janaebyrne       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-// Free the command list
-void free_command_list(t_cmd *cmd_list) {
-    t_cmd *temp;
-    while (cmd_list) {
-        temp = cmd_list;
-        cmd_list = cmd_list->next;
-        free(temp->command);
-        for (int i = 0; temp->args && temp->args[i]; i++)
-            free(temp->args[i]);
-        free(temp->args);
-        free(temp->input_file);
-        free(temp->output_file);
-        free(temp);
-    }
-}
-// Free the token list
-static void free_token_list(t_token *token_list) {
-    t_token *temp;
-    while (token_list) {
-        temp = token_list;
-        token_list = token_list->next;
-        free(temp->value);
-        free(temp);
-    }
-}
 
 int main(int argc, char **argv, char **envp)
 {

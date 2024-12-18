@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shkaruna <shkaruna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: janaebyrne <janaebyrne@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:07:05 by shkaruna          #+#    #+#             */
-/*   Updated: 2024/12/16 01:07:22 by shkaruna         ###   ########.fr       */
+/*   Updated: 2024/12/18 07:10:22 by janaebyrne       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,114 +104,3 @@ char	*ft_strndup(const char *s, size_t n)
 	return (dup_str);
 }
 
-int	ft_is_letter(char *s)
-{
-	printf("here\n");
-	if ((*s >= 'a' && *s <= 'z') || (*s >= 'A' && *s <= 'Z'))
-		return (0);
-	return (1);
-}
-
-void ft_putstr_fd(char *s, int fd)
-{
-    if (!s)
-        return;
-    write(fd, s, ft_strlen(s));
-}
-
-int ft_isalpha(int c)
-{
-    return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
-}
-
-int ft_isalnum(int c)
-{
-    return (ft_isalpha(c) || (c >= '0' && c <= '9'));
-}
-
-char	*ft_strcpy(char *dest, const char *src)
-{
-    char *original_dest = dest;
-
-    while (*src)
-    {
-        *dest = *src;
-        dest++;
-        src++;
-    }
-    *dest = '\0';
-    return original_dest;
-}
-
-int ft_is_digit(int c)
-{
-    return (c >= '0' && c <= '9');
-}
-
-int	ft_atoi(const char *str)
-{
-	int	i;
-	int	num;
-	int	sign;
-
-	sign = 1;
-	i = 0;
-	num = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-	{
-		i++;
-	}
-	if (str[i] == '+' && str[i + 1] != '-')
-		i++;
-	if (str[i] == '-')
-	{
-		sign = -1;
-		i++;
-	}
-	while (str[i] >= 48 && str[i] <= 57)
-	{
-		num = num * 10 + (str[i] - 48);
-		i++;
-	}
-	return (num * sign);
-}
-
-char	*ft_itoa(int n)
-{
-	char	*str;
-	long	num;
-	int		len;
-	int		sign;
-
-	num = n;
-	len = 0;
-	if (n <= 0)
-		len = 1;
-	if (n < 0)
-	{
-		sign = -1;
-		num = -(long)n;
-	}
-	else
-	{
-		sign = 1;
-		num = n;
-	}
-	while (n)
-	{
-		n /= 10;
-		len++;
-	}
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (!str)
-		return (NULL);
-	str[len] = '\0';
-	while (len--)
-	{
-		str[len] = num % 10 + '0';
-		num /= 10;
-	}
-	if (sign == -1)
-		str[0] = '-';
-	return (str);
-}
