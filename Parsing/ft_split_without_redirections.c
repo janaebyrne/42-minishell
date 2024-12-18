@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_without_redirections.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbyrne <jbyrne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: janaebyrne <janaebyrne@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:06:12 by jbyrne            #+#    #+#             */
-/*   Updated: 2024/12/16 19:50:39 by jbyrne           ###   ########.fr       */
+/*   Updated: 2024/12/18 11:03:43 by janaebyrne       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+
 static void	free_split(char **split)
 {
 	int	i;
-
 	i = 0;
 	if (!split)
 		return ;
@@ -26,26 +26,38 @@ static void	free_split(char **split)
 	}
 	free(split);
 }
-
 char	*skip_whitespace(char *str, char delimiter)
 {
 	while (*str == ' ' || *str == delimiter)
 		str++;
 	return (str);
 }
+
+static char *skip_redirection(char *str)
+{
+	if (*(str + 1) == *(str + 2))
+		str += 2;
+	else
+		str += 1; 
+	str = skip_whitespace(str, ' ');
+	return str;
+}
+
 char	**ft_split_without_redirections(char *str, char delimiter)
 {
 	char	**result;
 	int		i = 0;
 
 	result = malloc(sizeof(char *) * (count_words_without_redirections(str, delimiter) + 1));
-	if (!result) return (NULL);
+	if (!result)
+		return (NULL);
 
 	while (*str)
 	{
-		str = (*str == ' ' || *str == delimiter) ? skip_whitespace(str, delimiter) : str;
-		if ((*str == '<' || *str == '>') && !(str += (*str + 1 == *str + 2 ? 2 : 1)))
-			str = skip_whitespace(str, ' ');
+		if (*str == ' ' || *str == delimiter)
+			str = skip_whitespace(str, delimiter);
+		else if (*str == '<' || *str == '>')
+			str = skip_redirection(str);
 		else if (*str && !(result[i++] = get_next_word(&str)))
 		{
 			free_split(result);
@@ -55,4 +67,3 @@ char	**ft_split_without_redirections(char *str, char delimiter)
 	result[i] = NULL;
 	return (result);
 }
-

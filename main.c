@@ -6,7 +6,7 @@
 /*   By: janaebyrne <janaebyrne@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 17:10:15 by shkaruna          #+#    #+#             */
-/*   Updated: 2024/12/18 07:21:24 by janaebyrne       ###   ########.fr       */
+/*   Updated: 2024/12/18 08:18:54 by janaebyrne       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ int main(int argc, char **argv, char **envp)
     (void)argv;
     char *prompt;
 
-    prompt = "\033[1;38;5;201mMinishell🐚 \033[0m";
-
+    prompt = "\033[1mMinishell🐚 \033[0m";
     set_signals_interactive();
-
     while (1)
     {
         line = readline(prompt);
@@ -40,16 +38,11 @@ int main(int argc, char **argv, char **envp)
         }
 
         if (line[0] != '\0')
-        {
             add_history(line);
-        }
-
+        
         ft_lexing(line, &token_list, shell.env_list, &shell);
         if (!token_list)
-        {
             continue;
-        }
-		//print_tokens(token_list); // debug
         if (!parse_quotes_in_tokens(token_list, shell.env_list))
         {
             printf("Error: Unclosed quote in the input\n");
@@ -73,13 +66,10 @@ int main(int argc, char **argv, char **envp)
         }
         set_signals_noninteractive();
         ft_execute_main(cmd_list, &shell);
-
         set_signals_interactive();
-
         free(args);
         cmd_list = NULL;
         token_list = NULL;
     }
-
     return 0;
 }
